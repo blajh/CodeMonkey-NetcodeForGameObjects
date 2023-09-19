@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 6098192470896285060}
   - component: {fileID: 6098192470896285061}
   - component: {fileID: 3759020513423079419}
+  - component: {fileID: 3097286780175713495}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -160,3 +161,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736f80f5f9902436b9e1079877b39d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3097286780175713495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6098192470896285063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 0
+  SyncPositionZ: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
