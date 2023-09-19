@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
+// Scripts that should run on the Network need to inherit from NetworkBehaviour
+
 public class PlayerNetwork : NetworkBehaviour
 {
+    // By default Nerwork Variables can be changed only by the Server, that's why we change the Write Permission to Owner
+
     private NetworkVariable<int> randomNumber = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+
+    // Don't use Awake and Start on Network, rather override OnNetworkSpawn
 
     public override void OnNetworkSpawn() {
         randomNumber.OnValueChanged += (int previousValue, int newValue) => {
@@ -15,6 +22,8 @@ public class PlayerNetwork : NetworkBehaviour
 
 
     void Update() {
+
+        // IsOwner is a nice check when we need it
 
         if (!IsOwner) return;
 
@@ -30,7 +39,7 @@ public class PlayerNetwork : NetworkBehaviour
         if (Input.GetKey(KeyCode.A)) moveDir.x = -1f;
 
         float moveSpeed = 3f;
-        transform.position += moveDir * moveSpeed * Time.deltaTime;
+        transform.position += moveSpeed * Time.deltaTime * moveDir;
 
     }
 }
