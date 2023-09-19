@@ -7,7 +7,8 @@ using Unity.Netcode;
 
 public class PlayerNetwork : NetworkBehaviour
 {
-    // By default Nerwork Variables can be changed only by the Server, that's why we change the Write Permission to Owner
+    // By default Network Variables can be changed only by the Server, that's why we change the Write Permission to Owner
+    // Network Variables can only be value types (int, float, bool, enum, struct), not reference types (object, class)
 
     private NetworkVariable<int> randomNumber = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
