@@ -83,7 +83,7 @@ public class PlayerNetwork : NetworkBehaviour
            
         }
 
-        Vector3 moveDir = new Vector3(0, 0, 0);
+        Vector3 moveDir = new Vector3 (0, 0, 0);
 
         if (Input.GetKey(KeyCode.W)) moveDir.z = +1f;
         if (Input.GetKey(KeyCode.S)) moveDir.z = -1f;
