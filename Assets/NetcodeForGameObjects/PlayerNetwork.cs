@@ -52,12 +52,15 @@ public class PlayerNetwork : NetworkBehaviour
         if (!IsOwner) return;
 
         if (Input.GetKeyDown(KeyCode.T)) {
+            TestServerRpc(new ServerRpcParams());
+            /*
             randomNumber.Value = new MyCustomData {
                 _int = 10,
                 _bool = false,
                 _message = "All your base are belong to us!"
             };
-		}
+            */
+        }
 
         Vector3 moveDir = new Vector3(0, 0, 0);
 
@@ -68,6 +71,19 @@ public class PlayerNetwork : NetworkBehaviour
 
         float moveSpeed = 3f;
         transform.position += moveSpeed * Time.deltaTime * moveDir;
+
+    }
+
+    // RPCs must end with ServerRpc or ClientRpc and have the right [Attribute]
+    // ServerRpc queues up to run on the server, even if called from the client
+    // RPCs must be defined inside class that inherits NetworkBehaviour
+	// RPCs must be attached to GameObjects that are NetworkObjects
+    // RPCs can use value type parameters, the exception being strings
+    // RPCs have an included paramter ServerRpcParams
+
+    [ServerRpc]
+    public void TestServerRpc(ServerRpcParams serverRpcParams) {
+        Debug.Log("TestServerRpc " + OwnerClientId + "; " + serverRpcParams.Receive.SenderClientId);
 
     }
 }
