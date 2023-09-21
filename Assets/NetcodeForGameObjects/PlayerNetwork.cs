@@ -52,7 +52,11 @@ public class PlayerNetwork : NetworkBehaviour
         if (!IsOwner) return;
 
         if (Input.GetKeyDown(KeyCode.T)) {
-            TestServerRpc(new ServerRpcParams());
+
+            TestClientRpc(new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new List<ulong> { 1 } } });
+
+            // TestServerRpc(new ServerRpcParams());
+
             /*
             randomNumber.Value = new MyCustomData {
                 _int = 10,
@@ -74,7 +78,7 @@ public class PlayerNetwork : NetworkBehaviour
 
     }
 
-    // RPCs must end with ServerRpc or ClientRpc and have the right [Attribute]
+    // RemoteProcedureCalls (RPCs) must end with ServerRpc or ClientRpc and have the right [Attribute]
     // ServerRpc queues up to run on the server, even if called from the client
     // RPCs must be defined inside class that inherits NetworkBehaviour
 	// RPCs must be attached to GameObjects that are NetworkObjects
@@ -86,4 +90,13 @@ public class PlayerNetwork : NetworkBehaviour
         Debug.Log("TestServerRpc " + OwnerClientId + "; " + serverRpcParams.Receive.SenderClientId);
 
     }
+
+    // The server calls the ClientRpc and all the Clients run it
+    // Clients can not call ClientRpc's
+    // ClientServerParams can choose which Target Client ID's will run the code
+
+    [ClientRpc]
+    public void TestClientRpc(ClientRpcParams clientRpcParams) {
+        Debug.Log("TestClientRpc");
+	}
 }
