@@ -8,6 +8,12 @@ using Unity.Collections;
 
 public class PlayerNetwork : NetworkBehaviour
 {
+
+    [SerializeField]
+    private Transform spawnedObjectPrefab;
+
+    private Transform spawnedObjectTransform;
+
     // By default Network Variables can be changed only by the Server, that's why we change the Write Permission to Owner
     // Network Variables can only be value types (int, float, bool, enum, struct), not reference types (object, class, array, string)
 
@@ -53,7 +59,13 @@ public class PlayerNetwork : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.T)) {
 
-            TestClientRpc(new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new List<ulong> { 1 } } });
+            // Instantiate spawns just on Server, not on Client - that's what the second line is for
+            // Client can't spawn objects, but he can call a ServerRpc to spawn the object for the client
+
+            spawnedObjectTransform = Instantiate(spawnedObjectPrefab);
+            spawnedObjectTransform.GetComponent<NetworkObject>().Spawn(true);
+
+            // TestClientRpc(new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new List<ulong> { 1 } } });
 
             // TestServerRpc(new ServerRpcParams());
 
@@ -64,6 +76,11 @@ public class PlayerNetwork : NetworkBehaviour
                 _message = "All your base are belong to us!"
             };
             */
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y)) {
+            Destroy(spawnedObjectTransform.gameObject);
+           
         }
 
         Vector3 moveDir = new Vector3(0, 0, 0);
